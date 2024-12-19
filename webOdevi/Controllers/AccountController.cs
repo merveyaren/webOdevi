@@ -1,60 +1,43 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using webOdevi.Models;
 
 namespace webOdevi.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<musteriler> _userManager;
+        private readonly SignInManager<musteriler> _signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<musteriler> userManager, SignInManager<musteriler> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        // GET: Login
+        // GET: /Account/Register
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult register()
         {
             return View();
         }
 
-        // POST: Login
+        // POST: /Account/Register
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Register(musteriler model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var user = new musteriler
                 {
-                    return RedirectToAction("Index", "Home");
-                }
+                    UserName = model.eposta,
+                    Email = model.eposta,
+                    musteriadi = model.musteriadi,
+                    musterisoyadi = model.musterisoyadi,
+                    musteritelefon = model.musteritelefon
+                };
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            }
-            return View(model);
-        }
-
-        // GET: Register
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        // POST: Register
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.sifre);
 
                 if (result.Succeeded)
                 {
@@ -70,7 +53,32 @@ namespace webOdevi.Controllers
             return View(model);
         }
 
-        // POST: Logout
+        // GET: /Account/Login
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: /Account/Login
+        [HttpPost]
+        public async Task<IActionResult> Login(musteriler model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.eposta, model.sifre, isPersistent: false, lockoutOnFailure: false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+            return View(model);
+        }
+
+        // POST: /Account/Logout
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

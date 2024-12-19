@@ -27,7 +27,56 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", serif;
 }
+/* Login ve Register container */
+.login-container, .register-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
 
+/* Form stili */
+.login-form .form-group, .register-form .form-group {
+    margin-bottom: 15px;
+}
+
+.login-form input, .register-form input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+    margin-top: 5px;
+}
+
+    .login-form input::placeholder, .register-form input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+.login-form button, .register-form button {
+    width: 100%;
+    padding: 10px;
+    background: #6a11cb;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .login-form button:hover, .register-form button:hover {
+        background: #2575fc;
+    }
+
+/* Navbar ile uyum */
+nav + .login-container, nav + .register-container {
+    margin-top: 20px;
+}
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/

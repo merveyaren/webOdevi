@@ -1,23 +1,24 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using webOdevi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Veritabaný baðlantýsý
+// Veritabaný baðlantýsýný PostgreSQL için yapýlandýr
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Identity ekleniyor
-builder.Services.AddDefaultIdentity<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+// Identity yapýlandýrmasý
+builder.Services.AddIdentity<musteriler, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
-// MVC kullanýmý
+// MVC yapýlandýrmasý
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Middleware ayarlarý
+// Middleware'ler
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -28,12 +29,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication(); // Authentication middleware
+app.UseAuthentication(); // Kimlik doðrulamayý etkinleþtir
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages(); // Identity için Razor Pages
 
 app.Run();

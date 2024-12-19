@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace webOdevi.Models
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<musteriler>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

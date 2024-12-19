@@ -1,11 +1,13 @@
-﻿namespace webOdevi.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace webOdevi.Models
 {
-    public class musteriler
+    public class musteriler : IdentityUser
     {
-        public int musteriId { get; set; }
-        public string musteriAdi { get; set; }
-        public string musteriSoyadi { get; set; }
-        public string musteriTelefon { get; set; }
+        public int musteriid { get; set; }
+        public string musteriadi { get; set; }
+        public string musterisoyadi { get; set; }
+        public string musteritelefon { get; set; }
         public string eposta { get; set; }
         public string sifre { get; set; }
     }

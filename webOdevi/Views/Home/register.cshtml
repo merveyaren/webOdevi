@@ -1,25 +1,33 @@
-﻿@model webOdevi.Models.RegisterViewModel
-@{
-    ViewData["Title"] = "Register";
-}
+﻿@model webOdevi.Models.musteriler
 
-<h2>Register</h2>
-
-<form asp-action="Register" method="post">
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+<div class="register-container">
+    <h2>Register</h2>
+    <form asp-action="Register" method="post" class="register-form">
+        <div class="form-group">
+            <label asp-for="musteriadi"></label>
+            <input asp-for="musteriadi" class="form-control" />
+            <span asp-validation-for="musteriadi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="musterisoyadi"></label>
+            <input asp-for="musterisoyadi" class="form-control" />
+            <span asp-validation-for="musterisoyadi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="musteritelefon"></label>
+            <input asp-for="musteritelefon" class="form-control" />
+            <span asp-validation-for="musteritelefon" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="eposta"></label>
+            <input asp-for="eposta" class="form-control" />
+            <span asp-validation-for="eposta" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="sifre"></label>
+            <input asp-for="sifre" type="password" class="form-control" />
+            <span asp-validation-for="sifre" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
