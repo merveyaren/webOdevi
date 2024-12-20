@@ -1,13 +1,43 @@
-﻿namespace webOdevi.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace webOdevi.Models
 {
+    [Table("personel")] // Veritabanı tablosunu belirtir
     public class personel
     {
-        public int personelId { get; set; }
-        public string personelAdi { get; set; }
-        public string personelSoyadi { get; set; }
+        [Key] // Primary key olarak işaretler
+        [Column("personelid")] // Kolon adı eşleştirilir
+        public int personelid { get; set; }
+
+        [Column("personeladi")]
+        [Required]
+        [StringLength(50)] // Maksimum uzunluk 50
+        public string personeladi { get; set; }
+
+        [Column("personelsoyadi")]
+        [Required]
+        [StringLength(50)]
+        public string personelsoyadi { get; set; }
+
+        [Column("pozisyon")]
+        [Required]
+        [StringLength(100)]
         public string pozisyon { get; set; }
-        public string personelTelefon { get; set; }
-        public string personelEposta { get; set; }
-        public DateTime iseBaslamaTarihi { get; set; }
+
+        [Column("personeltelefon")]
+        [Required]
+        [StringLength(15)]
+        public string personeltelefon { get; set; }
+
+        [Column("personeleposta")]
+        [Required]
+        [StringLength(100)]
+        public string personeleposta { get; set; }
+
+        [Column("isebaslamatarihi")]
+        [Required] // NOT NULL belirtir
+        public DateTime isebaslamatarihi { get; set; }
     }
 }

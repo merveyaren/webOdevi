@@ -1,17 +1,11 @@
 using webOdevi.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Veritabaný baðlantýsýný PostgreSQL için yapýlandýr
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Identity yapýlandýrmasý
-builder.Services.AddIdentity<musteriler, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+    options.UseNpgsql(builder.Configuration.GetConnectionString("KuaforDB")));
 
 // MVC yapýlandýrmasý
 builder.Services.AddControllersWithViews();
@@ -29,6 +23,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseAuthentication(); // Kimlik doðrulamayý etkinleþtir
 app.UseAuthorization();
 

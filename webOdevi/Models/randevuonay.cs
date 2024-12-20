@@ -1,11 +1,38 @@
-﻿namespace webOdevi.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace webOdevi.Models
 {
+    [Table("randevuonay")] // Tablo ismini belirten öznitelik
     public class randevuonay
     {
-        public int onayId { get; set; }
-        public int randevuId { get; set; }
-        public string onayDurum { get; set; }
-        public DateTime onayTarihi { get; set; }
-        public string onaylayanCalisan { get; set; }
+        [Key] // Primary key olarak işaretler
+        [Column("onayid")] // Tablo kolon adı ile eşleştirilir
+        public int onayid { get; set; }
+
+        [Column("randevuid")]
+        [Required] // NOT NULL
+        public int randevuid { get; set; }
+
+        [Column("onaydurum")]
+        [Required]
+        [StringLength(20)] // 20 karakter uzunluğunda olduğunu belirtir
+        public string onaydurum { get; set; }
+
+        [Column("onaytarihi")]
+        [Required]
+        public DateTime onaytarihi { get; set; }
+
+        [Column("onaylayancalisan")]
+        [Required]
+        public int onaylayancalisan { get; set; }
+
+        // İlişki tanımlamaları
+        [ForeignKey("onaylayancalisan")]
+        public personel Personel { get; set; }
+
+        [ForeignKey("randevuid")]
+        public randevular Randevu { get; set; }
     }
 }

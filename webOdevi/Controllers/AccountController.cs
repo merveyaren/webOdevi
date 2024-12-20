@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using webOdevi.Models;
 
 namespace webOdevi.Controllers
@@ -8,48 +9,44 @@ namespace webOdevi.Controllers
     {
         private readonly UserManager<musteriler> _userManager;
         private readonly SignInManager<musteriler> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<musteriler> userManager, SignInManager<musteriler> signInManager)
+        public AccountController(UserManager<musteriler> userManager, SignInManager<musteriler> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         // GET: /Account/Register
         [HttpGet]
-        public IActionResult register()
+        public IActionResult Register()
         {
             return View();
         }
 
         // POST: /Account/Register
         [HttpPost]
-        public async Task<IActionResult> Register(musteriler model)
+        public IActionResult Register(musteriler model)
         {
             if (ModelState.IsValid)
             {
                 var user = new musteriler
                 {
-                    UserName = model.eposta,
-                    Email = model.eposta,
+                    
+                    eposta = model.eposta,
                     musteriadi = model.musteriadi,
                     musterisoyadi = model.musterisoyadi,
-                    musteritelefon = model.musteritelefon
+                    musteritelefon = model.musteritelefon,
+                    sifre = model.sifre  // Şifre doğrudan alınır ve kaydedilir.
                 };
 
-                var result = await _userManager.CreateAsync(user, model.sifre);
+                _context.Musteriler.Add(user);
+                _context.SaveChanges();  // Veritabanına kaydedilir
 
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                return RedirectToAction("Index", "Home");
             }
+
             return View(model);
         }
 
@@ -62,27 +59,28 @@ namespace webOdevi.Controllers
 
         // POST: /Account/Login
         [HttpPost]
-        public async Task<IActionResult> Login(musteriler model)
+        public IActionResult Login(musteriler model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.eposta, model.sifre, isPersistent: false, lockoutOnFailure: false);
+                var user = _context.Musteriler.SingleOrDefault(u => u.eposta == model.eposta);
 
-                if (result.Succeeded)
+                if (user != null && user.sifre == model.sifre)  // Şifre doğrudan karşılaştırılır.
                 {
                     return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
+
             return View(model);
         }
 
         // POST: /Account/Logout
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await _signInManager.SignOutAsync();
+            _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
