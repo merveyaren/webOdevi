@@ -12,8 +12,14 @@ namespace webOdevi.Models
         [DataType(DataType.Password)]
         public string sifre { get; set; }
 
-        [DataType(DataType.Password)]
-        [Compare("sifre", ErrorMessage = "Şifreler eşleşmiyor.")]
-        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string musteriadi { get; set; }
+
+        [Required]
+        public string musterisoyadi { get; set; }
+
+        [Required]
+        public string musteritelefon { get; set; }
     }
 }

@@ -76,6 +76,7 @@ namespace webOdevi.Controllers
             return View(model);
         }
 
+
         // POST: /Account/Logout
         [HttpPost]
         public IActionResult Logout()

@@ -11,6 +11,5 @@ namespace webOdevi.Models
         [Required]
         [DataType(DataType.Password)]
         public string sifre { get; set; }
-
     }
 }

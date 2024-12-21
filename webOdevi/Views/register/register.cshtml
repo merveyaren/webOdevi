@@ -1,8 +1,18 @@
-﻿@model webOdevi.Models.musteriler
+﻿@model webOdevi.Models.Register
 
 <div class="register-container">
     <h2>Register</h2>
-    <form asp-action="Register" method="post" class="register-form">
+    <form asp-controller="register" asp-action="register" method="post" class="register-form">
+        <div class="form-group">
+            <label asp-for="eposta"></label>
+            <input asp-for="eposta" class="form-control" />
+            <span asp-validation-for="eposta" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="sifre"></label>
+            <input asp-for="sifre" type="password" class="form-control" />
+            <span asp-validation-for="sifre" class="text-danger"></span>
+        </div>
         <div class="form-group">
             <label asp-for="musteriadi"></label>
             <input asp-for="musteriadi" class="form-control" />
@@ -17,16 +27,6 @@
             <label asp-for="musteritelefon"></label>
             <input asp-for="musteritelefon" class="form-control" />
             <span asp-validation-for="musteritelefon" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="eposta"></label>
-            <input asp-for="eposta" class="form-control" />
-            <span asp-validation-for="eposta" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="sifre"></label>
-            <input asp-for="sifre" type="password" class="form-control" />
-            <span asp-validation-for="sifre" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
