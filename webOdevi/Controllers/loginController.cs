@@ -27,7 +27,7 @@ namespace webOdevi.Controllers
 
                 if (user != null && user.sifre == model.sifre)  // Basit şifre doğrulama
                 {
-                    return RedirectToAction("Register", "Home");  // Giriş başarılı yönlendirme
+                    return RedirectToAction("Index", "Home");  // Giriş başarılı yönlendirme
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");

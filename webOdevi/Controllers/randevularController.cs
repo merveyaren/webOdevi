@@ -1,73 +1,94 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using webOdevi.Models;
 
-namespace webOdevi.Controllers
+public class randevularController : Controller
 {
-    public class randevularController : Controller
+    private readonly ApplicationDbContext _context;
+
+    public randevularController(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public randevularController(ApplicationDbContext context)
+    [HttpGet]
+    public IActionResult randevular()
+    {
+        ViewData["IsLoggedIn"] = HttpContext.Session.GetInt32("musteriid") != null;
+
+        if (ViewData["IsLoggedIn"] == null || !(bool)ViewData["IsLoggedIn"])
         {
-            _context = context;
+            return RedirectToAction("login", "login");
         }
 
-        public IActionResult Index()
-        {
-            var randevular = _context.Randevular.ToList();
-            return View(randevular);
-        }
+        ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
+        ViewBag.Personel = new SelectList(_context.Personel.ToList(), "personelid", "personeladi", "personelsoyadi");
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        return View(new randevular());
+    }
 
-        [HttpPost]
-        public IActionResult Create(randevular randevu)
+
+
+    [HttpPost]
+    public IActionResult randevularEkle(randevular model)
+    {
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
+            var mevcutRandevular = _context.Randevular
+                .Where(r => r.personelid == model.personelid &&
+                            r.randevutarihi == model.randevutarihi &&
+                            r.baslangicsaati < model.bitissaati &&
+                            model.baslangicsaati < r.bitissaati)
+                .ToList();
+
+            if (mevcutRandevular.Any())
             {
-                _context.Randevular.Add(randevu);
+                ModelState.AddModelError("", "Seçilen saatte personelin başka bir randevusu bulunmaktadır.");
+            }
+            else
+            {
+                model.durum = "Bekliyor"; // Varsayılan durum
+                _context.Randevular.Add(model);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Randevularim", "Musteri");
             }
-            return View(randevu);
         }
 
-        public IActionResult Edit(int id)
+        ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
+        ViewBag.Personel = new SelectList(_context.Personel.ToList(), "personelid", "personeladi", "personelsoyadi");
+
+        return View("randevular", model);
+    }
+
+    [HttpGet]
+    public IActionResult Randevularim()
+    {
+        var musteriid = HttpContext.Session.GetInt32("musteriid");
+
+        if (musteriid == null)
         {
-            var randevu = _context.Randevular.Find(id);
-            if (randevu == null)
-            {
-                return NotFound();
-            }
-            return View(randevu);
+            return RedirectToAction("login", "login");
         }
 
-        [HttpPost]
-        public IActionResult Edit(randevular randevu)
-        {
-            if (ModelState.IsValid)
+        var randevular = _context.Randevular
+            .Include(r => r.Hizmet)
+            .Include(r => r.Personel)
+            .Where(r => r.musteriid == musteriid)
+            .Select(r => new
             {
-                _context.Randevular.Update(randevu);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(randevu);
-        }
+                r.randevuid,
+                r.Hizmet.hizmetadi,
+                r.Personel.personeladi,
+                r.Personel.personelsoyadi,
+                r.randevutarihi,
+                r.baslangicsaati,
+                r.bitissaati,
+                r.durum
+            })
+            .ToList();
 
-        public IActionResult Delete(int id)
-        {
-            var randevu = _context.Randevular.Find(id);
-            if (randevu == null)
-            {
-                return NotFound();
-            }
-
-            _context.Randevular.Remove(randevu);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
+        return View(randevular);
     }
 }

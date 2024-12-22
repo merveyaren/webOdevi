@@ -1,0 +1,27 @@
+﻿@model List<dynamic>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Hizmet</th>
+            <th>Personel</th>
+            <th>Tarih</th>
+            <th>Başlangıç</th>
+            <th>Bitiş</th>
+            <th>Durum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
+            <tr>
+                <td>@randevu.hizmetadi</td>
+                <td>@randevu.personeladi @randevu.personelsoyadi</td>
+                <td>@randevu.randevutarihi.ToShortDateString()</td>
+                <td>@randevu.baslangicsaati</td>
+                <td>@randevu.bitissaati</td>
+                <td>@randevu.durum</td>
+            </tr>
+        }
+    </tbody>
+</table>
