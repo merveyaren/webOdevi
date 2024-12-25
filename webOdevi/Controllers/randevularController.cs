@@ -1,94 +1,82 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using webOdevi.Models;
 
-public class randevularController : Controller
+namespace webOdevi.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public randevularController(ApplicationDbContext context)
+    public class randevularController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    [HttpGet]
-    public IActionResult randevular()
-    {
-        ViewData["IsLoggedIn"] = HttpContext.Session.GetInt32("musteriid") != null;
-
-        if (ViewData["IsLoggedIn"] == null || !(bool)ViewData["IsLoggedIn"])
+        public randevularController(ApplicationDbContext context)
         {
-            return RedirectToAction("login", "login");
+            _context = context;
         }
 
-        ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
-        ViewBag.Personel = new SelectList(_context.Personel.ToList(), "personelid", "personeladi", "personelsoyadi");
-
-        return View(new randevular());
-    }
-
-
-
-    [HttpPost]
-    public IActionResult randevularEkle(randevular model)
-    {
-        if (ModelState.IsValid)
+        // GET: Randevular
+        public IActionResult randevular()
         {
-            var mevcutRandevular = _context.Randevular
-                .Where(r => r.personelid == model.personelid &&
-                            r.randevutarihi == model.randevutarihi &&
-                            r.baslangicsaati < model.bitissaati &&
-                            model.baslangicsaati < r.bitissaati)
-                .ToList();
+            // Oturum kontrolü
+            var musteriid = HttpContext.Session.GetInt32("musteriid");
 
-            if (mevcutRandevular.Any())
+            if (musteriid == null)
             {
-                ModelState.AddModelError("", "Seçilen saatte personelin başka bir randevusu bulunmaktadır.");
+                return RedirectToAction("login", "login");
+            }
+
+            // Dropdown için veriler
+            ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
+            ViewBag.Personel = _context.Personel
+                .Select(p => new SelectListItem
+                {
+                    Value = p.personelid.ToString(),
+                    Text = $"{p.personeladi} {p.personelsoyadi} - {p.pozisyon}"
+                }).ToList();
+
+            return View(new randevular());
+        }
+
+        [HttpPost]
+        public IActionResult randevular(randevular model)
+        {
+            var musteriid = HttpContext.Session.GetInt32("musteriid");
+
+            if (musteriid == null)
+            {
+                return RedirectToAction("login", "login");
+            }
+
+            if (ModelState.IsValid)
+            {
+                model.musteriid = musteriid.Value;
+                model.durum = "Bekliyor"; // Varsayılan durum
+
+                try
+                {
+                    _context.Randevular.Add(model);
+                    _context.SaveChanges(); // Kaydet
+
+                    return RedirectToAction("Index", "Home"); // Başarıyla yönlendirme
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Hata: {ex.Message}");
+                    ModelState.AddModelError("", "Randevu kaydedilirken bir hata oluştu.");
+                }
             }
             else
             {
-                model.durum = "Bekliyor"; // Varsayılan durum
-                _context.Randevular.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction("Randevularim", "Musteri");
+                // Model geçerli değilse, formu tekrar doldurun
+                ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
+                ViewBag.Personel = _context.Personel
+                    .Select(p => new SelectListItem
+                    {
+                        Value = p.personelid.ToString(),
+                        Text = $"{p.personeladi} {p.personelsoyadi} - {p.pozisyon}"
+                    }).ToList();
             }
+
+            return View("randevular", model);
         }
-
-        ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
-        ViewBag.Personel = new SelectList(_context.Personel.ToList(), "personelid", "personeladi", "personelsoyadi");
-
-        return View("randevular", model);
-    }
-
-    [HttpGet]
-    public IActionResult Randevularim()
-    {
-        var musteriid = HttpContext.Session.GetInt32("musteriid");
-
-        if (musteriid == null)
-        {
-            return RedirectToAction("login", "login");
-        }
-
-        var randevular = _context.Randevular
-            .Include(r => r.Hizmet)
-            .Include(r => r.Personel)
-            .Where(r => r.musteriid == musteriid)
-            .Select(r => new
-            {
-                r.randevuid,
-                r.Hizmet.hizmetadi,
-                r.Personel.personeladi,
-                r.Personel.personelsoyadi,
-                r.randevutarihi,
-                r.baslangicsaati,
-                r.bitissaati,
-                r.durum
-            })
-            .ToList();
-
-        return View(randevular);
     }
 }

@@ -34,7 +34,7 @@
 
     <!-- Template Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
-
+    @RenderSection("randevular", required: false)
     <!-- =======================================================
     * Template Name: Restaurantly - v3.1.0
     * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
@@ -55,35 +55,38 @@
         </div>
     </div>
 
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-cente">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-        <h1 class="logo me-auto me-lg-0"><a href="index.html">LUNARIS</a></h1>
+            <h1 class="logo me-auto me-lg-0"><a href="index.html">LUNARIS</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="/img/logo.png" alt="" class="img-fluid"></a>-->
 
-        <nav id="navbar" class="navbar order-last order-lg-0">
-            <ul>
-                <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
-                <a class="nav-link" href="@Url.Action("About", "Home")">About</a>
-                <a class="nav-link" href="@Url.Action("Services", "Home")">Services</a>
-                <a class="nav-link" href="@Url.Action("Gallery", "Home")">Gallery</a>
-                <a class="nav-link" href="@Url.Action("OurTeam", "Home")">Our Team</a>
-                    @if (ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"])
-                    {
-                        <a href="@Url.Action("randevular", "randevular")" class="book-a-table-btn scrollto d-none d-lg-flex">RANDEVU AL</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("login", "login")" class="book-a-table-btn scrollto d-none d-lg-flex">LOG IN</a>
-                    }
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                    <a class="nav-link" href="@Url.Action("About", "Home")">About</a>
+                    <a class="nav-link" href="@Url.Action("Services", "Home")">Services</a>
+                    <a class="nav-link" href="@Url.Action("Gallery", "Home")">Gallery</a>
+                    <a class="nav-link" href="@Url.Action("OurTeam", "Home")">Our Team</a>
+                    <nav>
+                        @if (ViewData["UserEmail"] != null)
+                        {
+                            <a href="@Url.Action("randevular", "randevular")">Randevu Al</a>
+                        }
+                        
+                    </nav>
 
 
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- .navbar -->
+            <a href="@Url.Action("login", "login")" class="book-a-table-btn scrollto d-none d-lg-flex">LOG IN</a>
+           
 
-    </div>
-</header>
+        </div>
+    </header>
 <!-- End Header -->
     <div class="container">
         <main role="main" class="pb-3">

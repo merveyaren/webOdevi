@@ -1,13 +1,13 @@
-﻿@model List<dynamic>
+﻿@model IEnumerable<dynamic>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Hizmet</th>
-            <th>Personel</th>
-            <th>Tarih</th>
-            <th>Başlangıç</th>
-            <th>Bitiş</th>
+            <th>Hizmet Adı</th>
+            <th>Personel Adı</th>
+            <th>Personel Soyadı</th>
+            <th>Randevu Tarihi</th>
+            <th>Başlangıç Saati</th>
             <th>Durum</th>
         </tr>
     </thead>
@@ -16,10 +16,10 @@
         {
             <tr>
                 <td>@randevu.hizmetadi</td>
-                <td>@randevu.personeladi @randevu.personelsoyadi</td>
+                <td>@randevu.personeladi</td>
+                <td>@randevu.personelsoyadi</td>
                 <td>@randevu.randevutarihi.ToShortDateString()</td>
                 <td>@randevu.baslangicsaati</td>
-                <td>@randevu.bitissaati</td>
                 <td>@randevu.durum</td>
             </tr>
         }

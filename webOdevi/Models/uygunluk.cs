@@ -14,17 +14,17 @@ namespace webOdevi.Models
         public int personelid { get; set; }
 
         [Column("tarih")]
-        [Required]
+
         [DataType(DataType.Date)] // Tarihin tarih türünde olduğunu belirtir
         public DateTime tarih { get; set; }
 
         [Column("baslangicsaati")]
-        [Required]
+
         [DataType(DataType.Time)] // Başlangıç saatinin zaman türünde olduğunu belirtir
         public TimeSpan baslangicsaati { get; set; }
 
         [Column("bitissaati")]
-        [Required]
+
         [DataType(DataType.Time)] // Bitiş saatinin zaman türünde olduğunu belirtir
         public TimeSpan bitissaati { get; set; }
 

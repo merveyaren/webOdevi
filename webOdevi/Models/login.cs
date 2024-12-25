@@ -2,7 +2,7 @@
 
 namespace webOdevi.Models
 {
-    public class Login
+    public class login
     {
         [Required]
         [EmailAddress]

@@ -10,12 +10,11 @@ namespace webOdevi.Models
         public int hizmetid { get; set; }
 
         [Column("hizmetadi")]
-        [Required]
         [StringLength(100)] // 100 karakter uzunluğunda
         public string hizmetadi { get; set; }
 
         [Column("fiyat")]
-        [Required]
+
         [DataType(DataType.Currency)] // Fiyatın para biçiminde olduğunu belirtir
         public decimal fiyat { get; set; }
     }

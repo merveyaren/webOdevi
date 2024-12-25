@@ -12,33 +12,30 @@ namespace webOdevi.Models
         public int randevuid { get; set; }
 
         [Column("musteriid")]
-        [Required] // NOT NULL
+         // NOT NULL
         public int musteriid { get; set; }
 
         [Column("personelid")]
-        [Required]
+        
         public int personelid { get; set; }
 
         [Column("hizmetid")]
-        [Required]
+        
         public int hizmetid { get; set; }
 
         [Column("randevutarihi")]
-        [Required]
+        
         public DateTime randevutarihi { get; set; }
 
         [Column("baslangicsaati")]
-        [Required]
+        
         public TimeSpan baslangicsaati { get; set; }
 
-        [Column("bitissaati")]
-        [Required]
-        public TimeSpan bitissaati { get; set; }
 
         [Column("durum")]
-        [Required]
+        
         [StringLength(20)] // 20 karakter uzunluğunda olduğunu belirtir
-        public string durum { get; set; }
+        public string durum { get; set; } = "Bekliyor";
 
         // İlişki tanımlamaları
         [ForeignKey("hizmetid")]

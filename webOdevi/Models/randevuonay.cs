@@ -12,20 +12,20 @@ namespace webOdevi.Models
         public int onayid { get; set; }
 
         [Column("randevuid")]
-        [Required] // NOT NULL
+         // NOT NULL
         public int randevuid { get; set; }
 
         [Column("onaydurum")]
-        [Required]
+        
         [StringLength(20)] // 20 karakter uzunluğunda olduğunu belirtir
         public string onaydurum { get; set; }
 
         [Column("onaytarihi")]
-        [Required]
+        
         public DateTime onaytarihi { get; set; }
 
         [Column("onaylayancalisan")]
-        [Required]
+        
         public int onaylayancalisan { get; set; }
 
         // İlişki tanımlamaları

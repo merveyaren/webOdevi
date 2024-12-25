@@ -4,7 +4,7 @@ using webOdevi.Models;
 
 namespace webOdevi.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -15,6 +15,8 @@ namespace webOdevi.Controllers
 
         public IActionResult Index()
         {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            ViewBag.UserId = userId; // Veriyi ViewBag ile aktar
             return View();
         }
         public IActionResult register()
