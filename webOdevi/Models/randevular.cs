@@ -11,25 +11,28 @@ namespace webOdevi.Models
         [Column("randevuid")] // Tablo kolon adı ile eşleştirilir
         public int randevuid { get; set; }
 
+        [Required]
         [Column("musteriid")]
          // NOT NULL
         public int musteriid { get; set; }
 
+        [Required]
         [Column("personelid")]
         
         public int personelid { get; set; }
 
+        [Required]
         [Column("hizmetid")]
         
         public int hizmetid { get; set; }
 
         [Column("randevutarihi")]
         
-        public DateTime randevutarihi { get; set; }
+        public DateTime? randevutarihi { get; set; }
 
         [Column("baslangicsaati")]
         
-        public TimeSpan baslangicsaati { get; set; }
+        public TimeSpan? baslangicsaati { get; set; }
 
 
         [Column("durum")]
