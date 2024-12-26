@@ -23,6 +23,14 @@ namespace webOdevi.Controllers
         {
             return View();
         }
+        public IActionResult ModifyPhoto()
+        {
+            return View();
+        }
+        public IActionResult foto()
+        {
+            return View();
+        }
         public IActionResult About()
         {
             return View();
@@ -49,5 +57,6 @@ namespace webOdevi.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
