@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using OpenCvSharp;
-using System.Threading.Tasks;
 using System.IO;
 using System;
 using webOdevi.Models;
@@ -10,51 +9,60 @@ namespace webOdevi.Controllers
 {
     public class FotoController : Controller
     {
+        [HttpGet]
+        [Route("Foto")]
+        public IActionResult Foto()
+        {
+            var model = new PhotoUploadModel
+            {
+                output_url = null
+            };
+            return View("~/Views/Home/Foto.cshtml", model);
+        }
+
         [HttpPost]
         [Route("Foto/ModifyPhoto")]
         public IActionResult Foto(IFormFile photo)
         {
             if (photo != null && photo.Length > 0)
             {
-                // Geçici dosya yolu
-                var tempPath = Path.Combine(Path.GetTempPath(), photo.FileName);
-                using (var stream = new FileStream(tempPath, FileMode.Create))
-                {
-                    photo.CopyTo(stream);
-                }
-
-                // OpenCV ile okuma ve işlem yapma
-                var outputPath = Path.Combine(Path.GetTempPath(), "modified_" + photo.FileName);
                 try
                 {
-                    using (var img = OpenCvSharp.Mat.FromImageData(System.IO.File.ReadAllBytes(tempPath)))
+                    var safeFileName = Path.GetFileNameWithoutExtension(photo.FileName) + Path.GetExtension(photo.FileName);
+                    var tempPath = Path.Combine(Path.GetTempPath(), safeFileName);
+                    var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", "modified_" + safeFileName);
+
+                    using (var stream = new FileStream(tempPath, FileMode.Create))
                     {
+                        photo.CopyTo(stream);
+                    }
+
+                    var fileBytes = System.IO.File.ReadAllBytes(tempPath);
+                    using (var img = OpenCvSharp.Mat.FromImageData(fileBytes))
+                    {
+                        if (img.Empty())
+                        {
+                            throw new Exception("Görsel yüklenemedi.");
+                        }
+
                         var grayImg = new OpenCvSharp.Mat();
                         Cv2.CvtColor(img, grayImg, OpenCvSharp.ColorConversionCodes.BGR2GRAY);
                         Cv2.ImWrite(outputPath, grayImg);
                     }
 
-                    // Model oluştur ve View'e gönder
-                    var model = new PhotoUploadModel
-                    {
-                        output_url = "/images/modified_" + photo.FileName // Görünümde görüntülenecek dosya yolu
-                    };
-                    return View("Foto", model);
+                    var model = new PhotoUploadModel(photo, "/images/modified_" + safeFileName);
+                    return View("~/Views/Home/Foto.cshtml", model);
                 }
                 catch (Exception ex)
                 {
-                    // Hata durumunda boş model gönder
                     Console.WriteLine("Hata: " + ex.Message);
-                    return View("Foto", new PhotoUploadModel());
+                    return View("~/Views/Home/Foto.cshtml", new PhotoUploadModel());
                 }
             }
             else
             {
-                // Fotoğraf yoksa boş bir model gönder
-                return View("Foto", new PhotoUploadModel());
+                return View("~/Views/Home/Foto.cshtml", new PhotoUploadModel());
             }
         }
-
     }
 }
-

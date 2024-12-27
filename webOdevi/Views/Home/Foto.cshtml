@@ -1,24 +1,23 @@
-﻿@if (Model != null && !string.IsNullOrEmpty(Model.output_url))
-{
-    <img src="@Model.output_url" alt="Modified Image" />
-}
-else
-{
-    <p>No image available.</p>
-}
+﻿@model webOdevi.Models.PhotoUploadModel
+<br />
+<br />
+<br />
+<br />
+<h1>Fotoğraf Yükleme ve Dönüştürme</h1>
 
-@model webOdevi.Models.PhotoUploadModel
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<form asp-action="ModifyPhoto" method="post" enctype="multipart/form-data">
-    <input type="file" name="Photo" />
+<form asp-controller="Foto" asp-action="ModifyPhoto" method="post" enctype="multipart/form-data">
+    <label for="photo">Fotoğraf Seç:</label>
+    <input type="file" name="photo" id="photo" />
     <button type="submit">Yükle ve Dönüştür</button>
-    @if (!string.IsNullOrEmpty(Model.output_url))
-    {
-        <img src="@Model.output_url" alt="Değiştirilmiş Fotoğraf" />
-    }
 </form>
+
+<div>
+    @if (Model != null && !string.IsNullOrEmpty(Model.output_url))
+    {
+        <img src="@Model.output_url" alt="Modified Image" />
+    }
+    else
+    {
+        <p>No image available.</p>
+    }
+</div>
