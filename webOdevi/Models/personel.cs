@@ -36,8 +36,6 @@ namespace webOdevi.Models
         [StringLength(100)]
         public string personeleposta { get; set; }
 
-        [Column("isebaslamatarihi")]
-
-        public DateTime isebaslamatarihi { get; set; }
+     
     }
 }

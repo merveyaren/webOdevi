@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webOdevi.Models
 {
@@ -10,12 +10,13 @@ namespace webOdevi.Models
         public int hizmetid { get; set; }
 
         [Column("hizmetadi")]
-        [StringLength(100)] // 100 karakter uzunluğunda
+        [StringLength(100)] // Maksimum 100 karakter
         public string hizmetadi { get; set; }
 
         [Column("fiyat")]
-
-        [DataType(DataType.Currency)] // Fiyatın para biçiminde olduğunu belirtir
         public decimal fiyat { get; set; }
+
+        [Column("sure")]
+        public int sure { get; set; } // Hizmet süresi, dakika cinsinden tutulur
     }
 }

@@ -8,5 +8,20 @@ namespace webOdevi.Controllers
         {
             return View();
         }
+
+
+
+        public IActionResult PersonelVerimTablosu()
+        {
+            
+            return View();
+        }
+
+        public IActionResult RandevuOnay()
+        {
+           
+            return View();
+        }
     }
+
 }

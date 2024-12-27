@@ -1,0 +1,44 @@
+﻿@model IEnumerable<webOdevi.Models.personel>
+
+<h2>Personel Listesi</h2>
+
+@if (TempData["Mesaj"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Mesaj"]
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Pozisyon</th>
+            <th>Telefon</th>
+            <th>E-posta</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var personel in Model)
+        {
+            <tr>
+                <td>@personel.personeladi</td>
+                <td>@personel.personelsoyadi</td>
+                <td>@personel.pozisyon</td>
+                <td>@personel.personeltelefon</td>
+                <td>@personel.personeleposta</td>
+ 
+                <td>
+
+                    <a asp-controller="personel" asp-action="PersonelGuncelle" asp-route-id="@personel.personelid" class="btn btn-warning">Güncelle</a>
+                  
+                    <form asp-action="SilPersonel" asp-route-id="@personel.personelid" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

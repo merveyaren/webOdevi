@@ -1,0 +1,50 @@
+﻿@model webOdevi.Models.personel
+
+<h2>Personel Güncelle</h2>
+
+@if (TempData["Mesaj"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Mesaj"]
+    </div>
+}
+
+<form asp-action="PersonelGuncelle" method="post" class="personel-form">
+    <!-- ID gizli input olarak taşınıyor -->
+    <input type="hidden" asp-for="personelid" />
+
+    <div class="form-group">
+        <label for="personeladi">Personel Adı:</label>
+        <input asp-for="personeladi" class="form-control" id="personeladi" />
+        <span asp-validation-for="personeladi" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="personelsoyadi">Personel Soyadı:</label>
+        <input asp-for="personelsoyadi" class="form-control" id="personelsoyadi" />
+        <span asp-validation-for="personelsoyadi" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="pozisyon">Pozisyon:</label>
+        <input asp-for="pozisyon" class="form-control" id="pozisyon" />
+        <span asp-validation-for="pozisyon" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="personeltelefon">Telefon:</label>
+        <input asp-for="personeltelefon" class="form-control" id="personeltelefon" />
+        <span asp-validation-for="personeltelefon" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="personeleposta">E-posta:</label>
+        <input asp-for="personeleposta" class="form-control" id="personeleposta" />
+        <span asp-validation-for="personeleposta" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+        <a asp-action="PersonelListele" class="btn btn-secondary">İptal</a>
+    </div>
+</form>
