@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
 using System.Text.Json;
 using webOdevi.Models;
 
@@ -15,9 +17,9 @@ namespace webOdevi.Controllers
         }
 
         // GET: Randevular
+        [HttpGet]
         public IActionResult randevular()
         {
-
             ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
             ViewBag.Personel = _context.Personel
                 .Select(p => new SelectListItem
@@ -28,64 +30,70 @@ namespace webOdevi.Controllers
 
             return View(new randevular());
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult randevular(randevular model)
         {
-            var musteriid = HttpContext.Session.GetInt32("musteriid");
+            model.randevutarihi = model.randevutarihi?.ToUniversalTime();
 
-            if (musteriid == null)
+            Console.WriteLine($"22222");
+
+            try
             {
-                TempData["Hata"] = "Randevu almak için giriş yapmalısınız.";
-                return RedirectToAction("login", "login");
-            }
+                // Session'dan müşteri ID'sini al
+                var musteriid = HttpContext.Session.GetInt32("musteriid");
 
-            model.musteriid = musteriid.Value;
-            model.durum = "Bekliyor";
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (musteriid == null)
                 {
-                    Console.WriteLine("Model Before Save: " + JsonSerializer.Serialize(model));
+                    TempData["Hata"] = "Oturumunuz bulunamadı. Lütfen giriş yapın.";
+                    return RedirectToAction("login", "login");
+                }
+
+                // Model validation kontrolü
+                if (ModelState.IsValid)
+                {
+                    Console.WriteLine($"3333");
+
+                    model.musteriid = musteriid.Value;
+                    model.durum = "Bekliyor";
+
+                    // Veritabanına ekle
                     _context.Randevular.Add(model);
                     _context.SaveChanges();
+
                     TempData["Basari"] = "Randevunuz başarıyla kaydedildi!";
                     return RedirectToAction("Index", "Home");
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine($"Hata: {ex.Message}");
-                    TempData["Hata"] = "Randevu kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.";
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
+                    }
+
+                    // Dropdown'ları yeniden doldur
+                    ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
+                    ViewBag.Personel = _context.Personel
+                        .Select(p => new SelectListItem
+                        {
+                            Value = p.personelid.ToString(),
+                            Text = $"{p.personeladi} {p.personelsoyadi} - {p.pozisyon}"
+                        }).ToList();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
+                // Konsola hata mesajını daha detaylı yazdır
+                Console.WriteLine($"Hata: {ex.Message}");
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+                TempData["Hata"] = "Randevu kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.";
             }
 
-
-
-            // Dropdown'ları tekrar doldur
-            ViewBag.Services = new SelectList(_context.Services.ToList(), "hizmetid", "hizmetadi");
-            ViewBag.Personel = _context.Personel
-                .Select(p => new SelectListItem
-                {
-                    Value = p.personelid.ToString(),
-                    Text = $"{p.personeladi} {p.personelsoyadi} - {p.pozisyon}"
-                }).ToList();
-
-            Console.WriteLine($"Musteri ID: {model.musteriid}");
-            Console.WriteLine($"Personel ID: {model.personelid}");
-            Console.WriteLine($"Hizmet ID: {model.hizmetid}");
-            Console.WriteLine($"Randevu Tarihi: {model.randevutarihi}");
-            Console.WriteLine($"Başlangıç Saati: {model.baslangicsaati}");
-            Console.WriteLine($"Randevuid: {model.randevuid}");
-            Console.WriteLine($"Randevuid: {model.durum}");
             return View(model);
         }
+
     }
 }

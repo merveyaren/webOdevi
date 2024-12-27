@@ -13,41 +13,34 @@ namespace webOdevi.Models
 
         [Required]
         [Column("musteriid")]
-         // NOT NULL
         public int musteriid { get; set; }
 
         [Required]
         [Column("personelid")]
-        
         public int personelid { get; set; }
 
         [Required]
         [Column("hizmetid")]
-        
         public int hizmetid { get; set; }
 
-        [Column("randevutarihi")]
-        
-        public DateTime? randevutarihi { get; set; }
 
-        [Column("baslangicsaati")]
-        
-        public TimeSpan? baslangicsaati { get; set; }
+        [Required]
+        [Column("randevutarihi")]
+        public DateTimeOffset? randevutarihi { get; set; }
 
 
         [Column("durum")]
-        
         [StringLength(20)] // 20 karakter uzunluğunda olduğunu belirtir
         public string durum { get; set; } = "Bekliyor";
 
         // İlişki tanımlamaları
         [ForeignKey("hizmetid")]
-        public services Hizmet { get; set; }
+        public services? Hizmet { get; set; }
 
         [ForeignKey("musteriid")]
-        public musteriler Musteri { get; set; }
+        public musteriler? Musteri { get; set; }
 
         [ForeignKey("personelid")]
-        public personel Personel { get; set; }
+        public personel? Personel { get; set; }
     }
 }

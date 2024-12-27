@@ -11,30 +11,23 @@
 
 <br />
 
-<form asp-controller="randevular"  asp-action="randevular" method="post" class="randevular-form">
+<form asp-controller="randevular" asp-action="randevular" method="post" class="randevular-form">
     <div class="form-group">
-        <label for="hizmetid">Hizmet</label>
+        <label name="hizmetid" for="hizmetid">Hizmet</label>
         <select asp-for="hizmetid" asp-items="ViewBag.Services" class="form-control"></select>
         <input type="hidden" asp-for="hizmetid" />
     </div>
 
     <div class="form-group">
-        <label for="personalid">Personel</label>
+        <label name="personelid" for="personelid">Personel</label>
         <select asp-for="personelid" asp-items="ViewBag.Personel" class="form-control"></select>
         <input type="hidden" asp-for="personelid" />
     </div>
 
     <div class="form-group">
-        <label for="randevutarihi">Randevu Tarihi</label>
-        <input type="date" asp-for="randevutarihi" class="form-control" />
+        <label for="randevutarihi">Randevu Tarihi ve Saati</label>
+        <input type="datetime-local" asp-for="randevutarihi" class="form-control" />
     </div>
-
-    <div class="form-group">
-        <label for="baslangicsaati">Başlangıç Saati</label>
-        <input type="time" asp-for="baslangicsaati" class="form-control" />
-    </div>
-
-
 
     <div class="form-group">
         <label for="durum">Durum</label>
