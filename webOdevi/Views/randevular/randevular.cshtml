@@ -3,25 +3,18 @@
 @{
     ViewData["Title"] = "Randevu Al";
 }
-<br />
-<br />
-<br />
-<h2>Randevu Al</h2>
-<br />
 
-<br />
+<form asp-controller="randevular" asp-action="randevular" method="post" class="login-body d-flex flex-column">
 
-<form asp-controller="randevular" asp-action="randevular" method="post" class="randevular-form">
+    <h2>Randevu Al</h2>
     <div class="form-group">
-        <label name="hizmetid" for="hizmetid">Hizmet</label>
+        <label for="hizmetid">Hizmet</label>
         <select asp-for="hizmetid" asp-items="ViewBag.Services" class="form-control"></select>
-        <input type="hidden" asp-for="hizmetid" />
     </div>
 
     <div class="form-group">
-        <label name="personelid" for="personelid">Personel</label>
+        <label for="personelid">Personel</label>
         <select asp-for="personelid" asp-items="ViewBag.Personel" class="form-control"></select>
-        <input type="hidden" asp-for="personelid" />
     </div>
 
     <div class="form-group">
@@ -34,5 +27,5 @@
         <input type="text" asp-for="durum" class="form-control" placeholder="Bekliyor" readonly />
     </div>
 
-    <button type="submit" class="btn btn-primary">Randevu Al</button>
+    <button type="submit" class="btn btn-primary mt-3">Randevu Al</button>
 </form>
