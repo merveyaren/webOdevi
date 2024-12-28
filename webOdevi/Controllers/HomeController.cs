@@ -27,7 +27,7 @@ namespace webOdevi.Controllers
         {
             return View();
         }
-        public IActionResult foto()
+        public IActionResult Foto()
         {
             return View();
         }

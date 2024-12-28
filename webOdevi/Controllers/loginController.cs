@@ -31,7 +31,7 @@ namespace webOdevi.Controllers
                     HttpContext.Session.SetInt32("adminid", adminUser.adminid);
                     HttpContext.Session.SetString("UserEmail", adminUser.eposta);
 
-                    return RedirectToAction("PersonelVerimTablosu", "personel"); // Admin sayfasına yönlendirme
+                    return RedirectToAction("Admin", "personel"); // Admin sayfasına yönlendirme
                 }
 
                 // Musteri kontrolü

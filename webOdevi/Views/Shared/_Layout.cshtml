@@ -77,13 +77,7 @@
                         }
                     </nav>
 
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a class="nav-link" href="@Url.Action("PersonelEkle", "personel")">Personel Ekle</a>
-                        <a class="nav-link" href="@Url.Action("PersonelListele", "personel")">Personel Listele</a>
-                        <a class="nav-link" href="@Url.Action("PersonelverimTablosu", "personel")">Personel Verim Tablosu</a>
-                        <a class="nav-link" href="@Url.Action("RandevuOnay", "Home")">Randevu Onay</a>
-                    }
+                    
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>

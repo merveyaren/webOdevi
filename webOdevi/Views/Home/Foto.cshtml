@@ -1,23 +1,38 @@
-﻿@model webOdevi.Models.PhotoUploadModel
+﻿@{
+    ViewBag.Title = "Görüntü İşleme";
+}
 <br />
 <br />
 <br />
 <br />
-<h1>Fotoğraf Yükleme ve Dönüştürme</h1>
+<h2 style=" color:#ff4990 ">Görüntü İşleme</h2>
+<br />
+<p> Kararsız mı kaldınız? </p>
+<p>Fotoğrafınızı yükleyin ve önerilerimizi görün.</p>
 
-<form asp-controller="Foto" asp-action="ModifyPhoto" method="post" enctype="multipart/form-data">
-    <label for="photo">Fotoğraf Seç:</label>
-    <input type="file" name="photo" id="photo" />
-    <button type="submit">Yükle ve Dönüştür</button>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+<form asp-controller="Image" asp-action="Foto" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="uploadedImage">Fotoğraf Yükle</label>
+        <input type="file" class="form-control" id="uploadedImage" name="uploadedImage" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Gönder</button>
 </form>
 
-<div>
-    @if (Model != null && !string.IsNullOrEmpty(Model.output_url))
-    {
-        <img src="@Model.output_url" alt="Modified Image" />
-    }
-    else
-    {
-        <p>No image available.</p>
-    }
-</div>
+@if (ViewBag.ProcessedImagePath != null)
+{
+    <h3>İşlenmiş Görüntü:</h3>
+    <img src="@ViewBag.ProcessedImagePath" alt="İşlenmiş Görüntü" class="img-fluid" />
+
+    <h3>Saç Önerileri:</h3>
+    <ul class="suggestions-list">
+        @foreach (var suggestion in ViewBag.HairSuggestions)
+        {
+            <li class="suggestion-item">@suggestion</li>
+        }
+    </ul>
+}

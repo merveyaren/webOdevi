@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Panel";
+}
+
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+
+        <h1 class="logo me-auto me-lg-0"><a href="@Url.Action("Index", "Home")">LUNARIS</a></h1>
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                <a class="nav-link" href="@Url.Action("About", "Home")">About</a>
+                <a class="nav-link" href="@Url.Action("Services", "Home")">Services</a>
+                <a class="nav-link" href="@Url.Action("Gallery", "Home")">Gallery</a>
+                <a class="nav-link" href="@Url.Action("OurTeam", "Home")">Our Team</a>
+                <a class="nav-link" href="@Url.Action("Foto", "Home")">Photo AI</a>
+
+                @if (ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"])
+                {
+                    <a class="nav-link" href="@Url.Action("PersonelEkle", "personel")">Personel Ekle</a>
+                    <a class="nav-link" href="@Url.Action("PersonelListele", "personel")">Personel Listele</a>
+                    <a class="nav-link" href="@Url.Action("PersonelverimTablosu", "personel")">Personel Verim Tablosu</a>
+                    <a class="nav-link" href="@Url.Action("RandevuOnay", "Home")">Randevu Onay</a>
+                }
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+        <a href="@Url.Action("login", "login")" class="book-a-table-btn scrollto d-none d-lg-flex">LOG IN</a>
+
+    </div>
+</header>
+
+@RenderBody()

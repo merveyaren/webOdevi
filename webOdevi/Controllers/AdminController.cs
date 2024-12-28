@@ -6,22 +6,35 @@ namespace webOdevi.Controllers
     {
         public IActionResult Admin()
         {
+            // Admin sayfası için bir işlem veya veriler sağlanabilir.
+            ViewData["IsAdmin"] = true; // Admin olduğunu belirten ViewData
             return View();
         }
 
-
-
-        public IActionResult PersonelVerimTablosu()
+        public IActionResult PersonelEkle()
         {
-            
+            // Personel ekleme işlemleri
+            return View();
+        }
+
+        public IActionResult PersonelListele()
+        {
+            // Personel listeleme işlemleri
+            return View();
+        }
+
+        public IActionResult PersonelverimTablosu()
+        {
+            // Personel verim tablosu işlemleri
             return View();
         }
 
         public IActionResult RandevuOnay()
         {
-           
+            // Randevu onay işlemleri
             return View();
         }
     }
+
 
 }

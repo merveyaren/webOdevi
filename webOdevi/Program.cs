@@ -13,6 +13,7 @@ builder.Services.AddAuthorization(options =>
 });
 // MVC yapýlandýrmasý
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<webOdevi.Helpers.ImageProcessingHelper>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>

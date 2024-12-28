@@ -14,9 +14,13 @@ namespace webOdevi.Controllers
 		{
 			_context = context;
 		}
-
-		// Personel Listeleme
-		public IActionResult PersonelListele()
+        public IActionResult Admin()
+        {
+            ViewData["IsAdmin"] = true; // Admin kontrol değişkeni
+            return View();
+        }
+        // Personel Listeleme
+        public IActionResult PersonelListele()
 		{
 			var personel = _context.Personel.ToList(); // Veritabanından tüm personeli çeker.
 			return View(personel);
