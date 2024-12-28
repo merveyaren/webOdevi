@@ -510,7 +510,7 @@ nav + .login-container, nav + .register-container {
 #hero {
     width: 100%;
     height: 100vh;
-    background: url('/img/hero-back.jpg') no-repeat center center; /* Arka plan görseli */
+    background: url('../img/hero-back.jpg') no-repeat center center; /* Arka plan görseli */
     
     display: flex;
     position: relative;

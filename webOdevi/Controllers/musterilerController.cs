@@ -18,57 +18,7 @@ namespace webOdevi.Controllers
             return View(musteriler);
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(musteriler musteri)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Musteriler.Add(musteri);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(musteri);
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var musteri = _context.Musteriler.Find(id);
-            if (musteri == null)
-            {
-                return NotFound();
-            }
-            return View(musteri);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(musteriler musteri)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Musteriler.Update(musteri);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(musteri);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var musteri = _context.Musteriler.Find(id);
-            if (musteri == null)
-            {
-                return NotFound();
-            }
-
-            _context.Musteriler.Remove(musteri);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
+       
     }
 }
 

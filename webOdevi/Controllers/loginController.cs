@@ -27,11 +27,11 @@ namespace webOdevi.Controllers
                 var adminUser = _context.Admin.SingleOrDefault(a => a.eposta == model.eposta && a.sifre == model.sifre);
                 if (adminUser != null)
                 {
-                    // Admin oturum verilerini ayarla
+                    // Admin oturum verileri
                     HttpContext.Session.SetInt32("adminid", adminUser.adminid);
                     HttpContext.Session.SetString("UserEmail", adminUser.eposta);
 
-                    return RedirectToAction("Admin", "personel"); // Admin sayfasına yönlendirme
+                    return RedirectToAction("Admin", "personel"); 
                 }
 
                 // Musteri kontrolü
@@ -43,7 +43,7 @@ namespace webOdevi.Controllers
                     HttpContext.Session.SetString("UserEmail", user.eposta);
                     HttpContext.Session.SetString("UserName", user.musteriadi);
 
-                    return RedirectToAction("Index", "Home"); // Kullanıcı sayfasına yönlendirme
+                    return RedirectToAction("Index", "Home"); 
                 }
 
                 // Hatalı giriş

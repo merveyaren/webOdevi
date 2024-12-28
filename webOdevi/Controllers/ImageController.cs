@@ -24,7 +24,7 @@ namespace webOdevi.Controllers
             }
 
             var tempDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/temp");
-            Directory.CreateDirectory(tempDir); // Geçici klasör yoksa oluştur
+            Directory.CreateDirectory(tempDir); //temp klasör oluşuyo
 
             var filePath = Path.Combine(tempDir, uploadedImage.FileName);
 
@@ -36,16 +36,16 @@ namespace webOdevi.Controllers
             try
             {
                 var processedImage = _imageProcessor.DetectFaces(filePath);
-                var suggestions = _imageProcessor.GenerateSuggestions(processedImage); // Önerileri oluştur
+                var suggestions = _imageProcessor.GenerateSuggestions(processedImage); // Öneriler oluşuyor
 
-                // İşlenmiş görüntü üzerine önerileri yaz
+                // İşlenmiş görüntü üzerine öneriler
                 string outputPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/processed_image_with_suggestions.jpg");
                 Cv2.ImWrite(outputPath, processedImage);
 
                 // İşlenmiş görüntüyü ve önerileri View'e gönder
                 ViewBag.ProcessedImagePath = "/images/processed_image_with_suggestions.jpg";
-                // Önerileri ayrı ayrı veya HTML formatında ViewBag'e gönderin
-                ViewBag.HairSuggestions = suggestions.Split('\n').ToList(); // Satırlara ayırarak View'e gönderme
+             
+                ViewBag.HairSuggestions = suggestions.Split('\n').ToList(); 
                 return View("~/Views/Home/Foto.cshtml");
 
             }
