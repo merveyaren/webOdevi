@@ -1,7 +1,8 @@
-﻿@model webOdevi.Models.personel
-
-<h2>Personel İşlemleri</h2>
-
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+@model webOdevi.Models.personel
 @if (TempData["Mesaj"] != null)
 {
     <div class="alert alert-success">
@@ -9,38 +10,43 @@
     </div>
 }
 
-<form method="post" asp-controller="personel" asp-action="PersonelEkle" class="personel-form">
-  
-    <div class="form-group">
-        <label>Personel Adı:</label>
-        <input asp-for="personeladi" class="form-control" />
-        <span asp-validation-for="personeladi" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Personel Soyadı:</label>
-        <input asp-for="personelsoyadi" class="form-control" />
-        <span asp-validation-for="personelsoyadi" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Pozisyon:</label>
-        <input asp-for="pozisyon" class="form-control" />
-        <span asp-validation-for="pozisyon" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Telefon:</label>
-        <input asp-for="personeltelefon" class="form-control" />
-        <span asp-validation-for="personeltelefon" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>E-posta:</label>
-        <input asp-for="personeleposta" class="form-control" />
-        <span asp-validation-for="personeleposta" class="text-danger"></span>
-    </div>
+<form method="post" asp-controller="personel" asp-action="PersonelEkle" class="login-body">
 
+    <div class="login-container">
+    <div class="form-row">
+        <h2>Personel İşlemleri</h2>
+        <div class="form-group ">
+            <label>Personel Adı:</label>
+            <input asp-for="personeladi" class="form-control" />
+            <span asp-validation-for="personeladi" class="text-danger"></span>
+        </div>
+        <div class="form-group ">
+            <label>Personel Soyadı:</label>
+            <input asp-for="personelsoyadi" class="form-control" />
+            <span asp-validation-for="personelsoyadi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Pozisyon:</label>
+            <input asp-for="pozisyon" class="form-control" />
+            <span asp-validation-for="pozisyon" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Telefon:</label>
+            <input asp-for="personeltelefon" class="form-control" />
+            <span asp-validation-for="personeltelefon" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <button type="submit" name="islem" value="Ekle" class="btn btn-primary mt-3">Ekle</button>
-        <button type="submit" name="islem" value="Güncelle" class="btn btn-warning mt-3">Güncelle</button>
-        <button type="submit" name="islem" value="Sil" class="btn btn-danger mt-3">Sil</button>
+        <div class="form-group">
+            <label>E-posta:</label>
+            <input asp-for="personeleposta" class="form-control" />
+            <span asp-validation-for="personeleposta" class="text-danger"></span>
+        </div>
+        <div class="form-group d-flex justify-content-around">
+            <button type="submit" name="islem" value="Ekle" class="btn btn-primary mt-3">Ekle</button>
+            <button type="submit" name="islem" value="Güncelle" class="btn btn-warning mt-3">Güncelle</button>
+            <button type="submit" name="islem" value="Sil" class="btn btn-danger mt-3">Sil</button>
+        </div>
+    </div>
     </div>
 </form>
+

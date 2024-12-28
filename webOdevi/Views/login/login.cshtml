@@ -1,21 +1,23 @@
 ﻿@model webOdevi.Models.login
 
-<div class="login-container">
-    <h2>Login</h2>
-    <form asp-controller="login" asp-action="login" method="post" class="login-form">
-        <div class="form-group">
-            <label>e-posta</label>
-            <input asp-for="eposta" class="form-control" />
-            <span asp-validation-for="eposta" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>şifre</label>
-            <input asp-for="sifre" type="password" class="form-control" />
-            <span asp-validation-for="sifre" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <p>
-        <a asp-controller="register" asp-action="register" class="register-link">Hesabınız yok mu? Kayıt olun</a>
-    </p>
-</div>
+<body class="login-body">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form asp-controller="login" asp-action="login" method="post" class="login-form">
+            <div class="form-group">
+                <label for="eposta">E-posta</label>
+                <input asp-for="eposta" id="eposta" class="form-control" />
+                <span asp-validation-for="eposta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="sifre">Şifre</label>
+                <input asp-for="sifre" id="sifre" type="password" class="form-control" />
+                <span asp-validation-for="sifre" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+        </form>
+        <p>
+            <a asp-controller="register" asp-action="register" class="register-link">Hesabınız yok mu? Kayıt olun</a>
+        </p>
+    </div>
+</body>

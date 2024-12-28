@@ -19,6 +19,7 @@ a {
   text-decoration: none;
 }
 
+
 a:hover {
   color: #d9ba85;
   text-decoration: none;
@@ -27,6 +28,18 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", serif;
 }
+.login-body {
+    display: flex; /* Flexbox kullanýmý */
+    justify-content: center; /* Yatayda ortalama */
+    align-items: center; /* Dikeyde ortalama */
+    min-height: 100vh; /* Sayfa yüksekliðini tam ekran yap */
+    margin: 0; /* Varsayýlan boþluklarý kaldýr */
+    background: url('/img/hero-back.jpg') no-repeat center center fixed; /* Arka plan görseli */
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
 /* Login ve Register container */
 .login-container, .register-container {
     background: rgba(255, 255, 255, 0.1);
@@ -35,6 +48,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 400px;
+    text-align: center; /* Metni ortala */
 }
 
 /* Form stili */
@@ -76,6 +90,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Navbar ile uyum */
 nav + .login-container, nav + .register-container {
     margin-top: 20px;
+
 }
 /*--------------------------------------------------------------
 # Preloader
@@ -493,12 +508,13 @@ nav + .login-container, nav + .register-container {
 # Hero Section
 --------------------------------------------------------------*/
 #hero {
-  width: 100%;
-  height: 100vh;
-  background: url("../img/hero-back.jpg") top center !important;
-  background-size: cover;
-  position: relative;
-  padding: 0;
+    width: 100%;
+    height: 100vh;
+    background: url('/img/hero-back.jpg') no-repeat center center; /* Arka plan görseli */
+    
+    display: flex;
+    position: relative;
+    padding: 0;
 }
 
 #hero:before {
