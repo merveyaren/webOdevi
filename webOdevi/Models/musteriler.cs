@@ -32,5 +32,6 @@ namespace webOdevi.Models
 
         [Column("sifre")]
         public string sifre { get; set; }
+        
     }
 }

@@ -56,12 +56,10 @@
     </div>
 
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-cente">
+    <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
             <h1 class="logo me-auto me-lg-0"><a href="index.html">LUNARIS</a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="/img/logo.png" alt="" class="img-fluid"></a>-->
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
@@ -71,27 +69,30 @@
                     <a class="nav-link" href="@Url.Action("Gallery", "Home")">Gallery</a>
                     <a class="nav-link" href="@Url.Action("OurTeam", "Home")">Our Team</a>
                     <a class="nav-link" href="@Url.Action("Foto", "Home")">Photo AI</a>
-                    <a class="nav-link" href="@Url.Action("PersonelEkle", "personel")">Personel Ekle</a>
-                    <a class="nav-link" href="@Url.Action("PersonelListele", "personel")">Personel Ekle</a>
-                    <a class="nav-link" href="@Url.Action("PersonelverimTablosu", "personel")">Personel Ekle</a>
-                    <a class="nav-link" href="@Url.Action("RandevuOnay", "Home")">Personel Ekle</a>
+
                     <nav>
                         @if (ViewData["UserEmail"] != null)
                         {
                             <a href="@Url.Action("randevular", "randevular")">Randevu Al</a>
                         }
-                        
                     </nav>
 
-
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link" href="@Url.Action("PersonelEkle", "personel")">Personel Ekle</a>
+                        <a class="nav-link" href="@Url.Action("PersonelListele", "personel")">Personel Listele</a>
+                        <a class="nav-link" href="@Url.Action("PersonelverimTablosu", "personel")">Personel Verim Tablosu</a>
+                        <a class="nav-link" href="@Url.Action("RandevuOnay", "Home")">Randevu Onay</a>
+                    }
+                </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
-            <!-- .navbar -->
+
             <a href="@Url.Action("login", "login")" class="book-a-table-btn scrollto d-none d-lg-flex">LOG IN</a>
-           
 
         </div>
     </header>
+
 <!-- End Header -->
     <div class="container">
         <main role="main" class="pb-3">

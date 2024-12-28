@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using webOdevi.Models;
 
 namespace webOdevi.Controllers
 {
-	public class personelController : Controller
+
+    public class personelController : Controller
 	{
 		private readonly ApplicationDbContext _context;
 

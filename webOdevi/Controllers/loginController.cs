@@ -17,23 +17,36 @@ namespace webOdevi.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult login(login model)
         {
             if (ModelState.IsValid)
             {
-                var user = _context.Musteriler.SingleOrDefault(u => u.eposta == model.eposta);
-
-                if (user != null && user.sifre == model.sifre)
+                // Admin kontrolü
+                var adminUser = _context.Admin.SingleOrDefault(a => a.eposta == model.eposta && a.sifre == model.sifre);
+                if (adminUser != null)
                 {
-                    // Oturum verilerini ayarla
+                    // Admin oturum verilerini ayarla
+                    HttpContext.Session.SetInt32("adminid", adminUser.adminid);
+                    HttpContext.Session.SetString("UserEmail", adminUser.eposta);
+
+                    return RedirectToAction("PersonelVerimTablosu", "personel"); // Admin sayfasına yönlendirme
+                }
+
+                // Musteri kontrolü
+                var user = _context.Musteriler.SingleOrDefault(u => u.eposta == model.eposta && u.sifre == model.sifre);
+                if (user != null)
+                {
+                    // Kullanıcı oturum verilerini ayarla
                     HttpContext.Session.SetInt32("musteriid", user.musteriid);
                     HttpContext.Session.SetString("UserEmail", user.eposta);
                     HttpContext.Session.SetString("UserName", user.musteriadi);
 
-                    return RedirectToAction("Index", "Home"); // Giriş sonrası yönlendirme
+                    return RedirectToAction("Index", "Home"); // Kullanıcı sayfasına yönlendirme
                 }
 
+                // Hatalı giriş
                 ModelState.AddModelError(string.Empty, "Eposta veya şifre hatalı.");
             }
 

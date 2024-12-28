@@ -6,7 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Veritabaný baðlantýsýný PostgreSQL için yapýlandýr
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("KuaforDB")));
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireRole("Admin"));
+});
 // MVC yapýlandýrmasý
 builder.Services.AddControllersWithViews();
 
@@ -28,6 +32,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+app.UseAuthorization();
 
 
 app.UseHttpsRedirection();
@@ -36,7 +41,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication(); // Kimlik doðrulamayý etkinleþtir
-app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
